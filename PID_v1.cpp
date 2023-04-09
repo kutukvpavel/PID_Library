@@ -7,20 +7,17 @@
  * modified by Paul Kutukov, 2016-2021
  **********************************************************************************************/
 
-#if ARDUINO >= 100
-  #include "Arduino.h"
-#else
-  #include "WProgram.h"
-#endif
-
 #include "PID_v1.h"
+
+#include <cmath>
 
 /*Constructor (...)*********************************************************
  *    The parameters specified here are those for for which we can't set up 
  *    reliable defaults, so we need to have the user set them.
  ***************************************************************************/
 PID::PID(float* Input, float* Output, float* Setpoint,
-        float Kp, float Ki, float Kd, int ControllerDirection)
+        float Kp, float Ki, float Kd, int ControllerDirection, unsigned long (*get_tick_ms)())
+        : millis(get_tick_ms)
 {
 	
     myOutput = Output;

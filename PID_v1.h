@@ -1,6 +1,4 @@
-#ifndef PID_v1_h
-#define PID_v1_h
-#define LIBRARY_VERSION	1.1.1
+#pragma once
 
 class PID
 {
@@ -16,7 +14,7 @@ class PID
 
   //commonly used functions **************************************************************************
     PID(float*, float*, float*,        // * constructor.  links the PID to the Input, Output, and 
-        float, float, float, int);     //   Setpoint.  Initial tuning parameters are also set here
+        float, float, float, int, unsigned long (*get_tick_ms)());     //   Setpoint.  Initial tuning parameters are also set here
 	
     void SetMode(int Mode);               // * sets PID to either Manual (0) or Auto (non-0)
 
@@ -58,6 +56,7 @@ class PID
 	void Initialize();
 		
 	// MODIFIED!
+	unsigned long (*millis)();
 	float ITermMax;
 	float DistillationBias;
 	float SetpointBcp;
@@ -85,5 +84,4 @@ class PID
 	float outMin, outMax;
 	bool inAuto;
 };
-#endif
 
