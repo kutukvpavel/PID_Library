@@ -127,7 +127,7 @@ void PID::SetTunings(float Kp, float Ki, float Kd)
    ki = Ki * SampleTimeInSec;
    kd = Kd / SampleTimeInSec;
  
-  if(controllerDirection ==REVERSE)
+  if(controllerDirection ==PID_DIR_REVERSE)
    {
       kp = (0 - kp);
       ki = (0 - ki);
@@ -181,7 +181,7 @@ void PID::SetOutputLimits(float Min, float Max)
  ******************************************************************************/ 
 void PID::SetMode(int Mode)
 {
-    bool newAuto = (Mode == AUTOMATIC);
+    bool newAuto = (Mode == PID_MODE_AUTOMATIC);
     if(newAuto == !inAuto)
     {  /*we just went from manual to auto*/
         PID::Initialize();
@@ -202,8 +202,8 @@ void PID::Initialize()
 }
 
 /* SetControllerDirection(...)*************************************************
- * The PID will either be connected to a DIRECT acting process (+Output leads 
- * to +Input) or a REVERSE acting process(+Output leads to -Input.)  we need to
+ * The PID will either be connected to a PID_DIR_DIRECT acting process (+Output leads 
+ * to +Input) or a PID_DIR_REVERSE acting process(+Output leads to -Input.)  we need to
  * know which one, because otherwise we may increase the output when we should
  * be decreasing.  This is called from the constructor.
  ******************************************************************************/
@@ -226,6 +226,6 @@ void PID::SetControllerDirection(int Direction)
 float PID::GetKp(){ return  dispKp; }
 float PID::GetKi(){ return  dispKi;}
 float PID::GetKd(){ return  dispKd;}
-int PID::GetMode(){ return  inAuto ? AUTOMATIC : MANUAL;}
+int PID::GetMode(){ return  inAuto ? PID_MODE_AUTOMATIC : PID_MODE_MANUAL;}
 int PID::GetDirection(){ return controllerDirection;}
 
